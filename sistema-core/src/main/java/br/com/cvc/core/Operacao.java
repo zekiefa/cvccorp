@@ -9,14 +9,12 @@ import br.com.cvc.core.dominio.OperacaoException;
  * @author joao_
  *
  */
-public interface OperacaoBasica {
+public interface Operacao {
 	
 	/**
 	 * Calcula a taxa de acordo com o valor da operação.
-	 * @param valor da operação
-	 * @param data da realização da transferencia
 	 * @return taxa calculada
 	 * @throws OperacaoException quando uma taxa não é aplicável
 	 */
-	BigDecimal calcularTaxa(final BigDecimal valor)  throws OperacaoException;
+	BigDecimal calcularTaxa()  throws OperacaoException;
 }

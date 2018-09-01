@@ -2,7 +2,6 @@ package br.com.cvc.core;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.Period;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -75,21 +74,10 @@ public class Conta {
 	 * @param transacao dados do agendamento.
 	 */
 	public void agendarTransferencia(final Agendamento transacao) throws OperacaoException {
-		final OperacaoBasica operacao;
 		Transferencia transferencia = validarTransacao(transacao);
-		final Period intervalo = Period.between(transferencia.getDataAgendamento(), transferencia.getDataTransferencia());
+		final Operacao operacao = new OperacaoBuilder().build(transferencia.getDataTransferencia(), transferencia.getValor());
 		
-		if( intervalo.getDays() == 1  ) {
-			operacao = new OperacaoTipoA(transferencia.getDataTransferencia());
-		}else if( intervalo.getDays() <= 10 ) {
-			operacao = new OperacaoTipoB(transferencia.getDataTransferencia());
-		}else if( intervalo.getDays() >= 10 ) {
-			operacao = new OperacaoTipoC(transferencia.getDataTransferencia());
-		}else {
-			throw new OperacaoException("Taxa da transação não aplicável");
-		}
-		
-		transferencia.setTaxa(operacao.calcularTaxa(transferencia.getValor()));
+		transferencia.setTaxa(operacao.calcularTaxa());
 		
 		this.atualizarExtrato(transferencia);
 	}

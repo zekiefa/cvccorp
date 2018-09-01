@@ -12,7 +12,7 @@ import br.com.cvc.core.util.CalculoUtil;
  * @author joao_
  *
  */
-public class OperacaoTipoC implements OperacaoBasica {
+public class OperacaoTipoC extends OperacaoBasica {
 	
 	private static final BigDecimal PORCENTAGEM_OITO = new BigDecimal("8");
 	
@@ -24,29 +24,27 @@ public class OperacaoTipoC implements OperacaoBasica {
 	
 	private static final BigDecimal LIMITE_VALOR_MINIMO = new BigDecimal("100000");
 	
-	private LocalDate dataTransferencia;
-	
-	public OperacaoTipoC(final LocalDate dataTransferencia) {
-		this.dataTransferencia = dataTransferencia;
+	public OperacaoTipoC(final LocalDate dataTransferencia, final BigDecimal valor) {
+		super(dataTransferencia, valor);
 	}
 	
 	/* (non-Javadoc)
 	 * @see br.com.cvc.core.OperacaoBasica#calcularTaxa(java.math.BigDecimal)
 	 */
-	public BigDecimal calcularTaxa(final BigDecimal valor) throws OperacaoException {
+	public BigDecimal calcularTaxa() throws OperacaoException {
 		BigDecimal taxa = BigDecimal.ZERO;
-		final Period intervalo = Period.between(LocalDate.now(), this.dataTransferencia);
+		final Period intervalo = Period.between(LocalDate.now(), this.getDataTransferencia());
 		final Integer dias = intervalo.getDays();
 		final Integer meses = intervalo.getMonths();
 		
 		if( meses == 0 && (dias > 10 && dias <= 20) ) { // acima de 10 dias até 20 dias
-			taxa = CalculoUtil.calcularPorcentagem(valor, PORCENTAGEM_OITO);
+			taxa = CalculoUtil.calcularPorcentagem(this.getValor(), PORCENTAGEM_OITO);
 		}else if((meses == 1 && dias == 0) || (meses == 0 && dias > 20)) { // acima de 30 dias até 30 dias
-			taxa = CalculoUtil.calcularPorcentagem(valor, PORCENTAGEM_SEIS);
+			taxa = CalculoUtil.calcularPorcentagem(this.getValor(), PORCENTAGEM_SEIS);
 		}else if(meses == 1 && (dias >= 1 && dias <= 10)) { // acima de 30 dias até 40 dias
-			taxa = CalculoUtil.calcularPorcentagem(valor, PORCENTAGEM_QUATRO);
-		}else if(meses > 1 || (meses == 1 && dias >= 10) && (valor.compareTo(LIMITE_VALOR_MINIMO) > 0)) { // acima de 40 dias e valor > 100 k
-			taxa = CalculoUtil.calcularPorcentagem(valor, PORCENTAGEM_DOIS);
+			taxa = CalculoUtil.calcularPorcentagem(this.getValor(), PORCENTAGEM_QUATRO);
+		}else if(meses > 1 || (meses == 1 && dias >= 10) && (this.getValor().compareTo(LIMITE_VALOR_MINIMO) > 0)) { // acima de 40 dias e valor > 100 k
+			taxa = CalculoUtil.calcularPorcentagem(this.getValor(), PORCENTAGEM_DOIS);
 		}else {
 			throw new OperacaoException("Taxa não aplicável.");
 		}
@@ -54,8 +52,4 @@ public class OperacaoTipoC implements OperacaoBasica {
 		return taxa;
 	}
 	
-	public LocalDate getDataTransferencia() {
-		return dataTransferencia;
-	}
-
 }

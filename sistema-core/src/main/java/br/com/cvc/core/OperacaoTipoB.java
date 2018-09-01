@@ -14,31 +14,25 @@ import br.com.cvc.core.dominio.OperacaoException;
  * @author joao_
  *
  */
-public class OperacaoTipoB implements OperacaoBasica {
+public class OperacaoTipoB extends OperacaoBasica {
 	
 	private static final BigDecimal VALOR_TAXA = new BigDecimal("12");
-	
-	private LocalDate dataTransferencia;
 	
 	/**
 	 * 
 	 */
-	public OperacaoTipoB(final LocalDate dataTransferencia) {
-		this.dataTransferencia = dataTransferencia;
+	public OperacaoTipoB(final LocalDate dataTransferencia, final BigDecimal valor) {
+		super(dataTransferencia, valor);
 	}
 
 	/* (non-Javadoc)
 	 * @see br.com.cvc.core.OperacaoBasica#calcularTaxa(java.math.BigDecimal)
 	 */
-	public BigDecimal calcularTaxa(final BigDecimal valor)  throws OperacaoException {
-		final Period intervalo = Period.between(LocalDate.now(), this.dataTransferencia);
+	public BigDecimal calcularTaxa()  throws OperacaoException {
+		final Period intervalo = Period.between(LocalDate.now(), this.getDataTransferencia());
 		final BigDecimal taxa = VALOR_TAXA.multiply(BigDecimal.valueOf(intervalo.getDays()));
 		
 		return taxa;
 	}
 	
-	public LocalDate getDataTransferencia() {
-		return dataTransferencia;
-	}
-
 }

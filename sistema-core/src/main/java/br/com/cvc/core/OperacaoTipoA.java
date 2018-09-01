@@ -14,34 +14,23 @@ import br.com.cvc.core.util.CalculoUtil;
  * @author joao_
  *
  */
-public class OperacaoTipoA implements OperacaoBasica {
+public class OperacaoTipoA extends OperacaoBasica {
 	
 	private static final BigDecimal VALOR_TAXA = new BigDecimal("3");
 	
 	private static final BigDecimal PORCENTAGEM = new BigDecimal("3");
 	
-	private LocalDate dataTransferencia;
-	
-	/**
-	 * Construtor
-	 */
-	public OperacaoTipoA(final LocalDate dataTransferencia) {
-		this.dataTransferencia = dataTransferencia;
+	public OperacaoTipoA(LocalDate dataTransferencia, BigDecimal valor) {
+		super(dataTransferencia, valor);
 	}
-
+	
 	/* (non-Javadoc)
 	 * @see br.com.cvc.core.OperacaoBasica#calcularTaxa(java.math.BigDecimal)
 	 */
-	public BigDecimal calcularTaxa(final BigDecimal valor)  throws OperacaoException {
-		final BigDecimal taxa = VALOR_TAXA.add(CalculoUtil.calcularPorcentagem(valor, PORCENTAGEM));
+	public BigDecimal calcularTaxa()  throws OperacaoException {
+		final BigDecimal taxa = VALOR_TAXA.add(CalculoUtil.calcularPorcentagem(this.getValor(), PORCENTAGEM));
 		
 		return taxa;
 	}
-
-	public LocalDate getDataTransferencia() {
-		return dataTransferencia;
-	}
-	
-	
 
 }
