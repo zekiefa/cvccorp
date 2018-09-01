@@ -80,11 +80,11 @@ public class Conta {
 		final Period intervalo = Period.between(transferencia.getDataAgendamento(), transferencia.getDataTransferencia());
 		
 		if( intervalo.getDays() == 1  ) {
-			operacao = new OperacaoTipoA();
+			operacao = new OperacaoTipoA(transferencia.getDataTransferencia());
 		}else if( intervalo.getDays() <= 10 ) {
-			operacao = new OperacaoTipoB();
+			operacao = new OperacaoTipoB(transferencia.getDataTransferencia());
 		}else if( intervalo.getDays() >= 10 ) {
-			operacao = new OperacaoTipoC();
+			operacao = new OperacaoTipoC(transferencia.getDataTransferencia());
 		}else {
 			throw new OperacaoException("Taxa da transação não aplicável");
 		}
