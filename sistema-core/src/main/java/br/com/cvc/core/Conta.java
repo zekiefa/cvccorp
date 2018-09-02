@@ -14,14 +14,13 @@ import br.com.cvc.core.dominio.Transferencia;
  * @author joao_
  *
  */
-public class Conta {
+public class Conta implements ContaBasica {
 	
 	/*
 	 * Instância do padrão Singleton.
 	 */
-	private static Conta instance;
+	private static ContaBasica instance;
 	
-	private Integer numero;
 	private List<Transferencia> extrato;
 	
 	private Conta() {
@@ -33,7 +32,7 @@ public class Conta {
 	 * 
 	 * @return a única instância da conta.
 	 */
-	public static synchronized Conta getInstance() {
+	public static synchronized ContaBasica getInstance() {
 		if( instance == null ) {
 			instance = new Conta();
 		}
@@ -41,18 +40,10 @@ public class Conta {
 		return instance;
 	}
 
-	public Integer getNumero() {
-		return numero;
-	}
-
-	public void setNumero(final Integer numero) {
-		this.numero = numero;
-	}
-	
-	/**
-	 * Lista os agendamentos realizados.
-	 * @return lista de transferências.
+		/* (non-Javadoc)
+	 * @see br.com.cvc.core.ContaBasica#listarExtrato()
 	 */
+	@Override
 	public List<Transferencia> listarExtrato() {
 		return extrato;
 	}
@@ -69,10 +60,10 @@ public class Conta {
 		this.extrato.add(agendamento);
 	}
 	
-	/**
-	 * Agenda uma transferência de valor.
-	 * @param transacao dados do agendamento.
+	/* (non-Javadoc)
+	 * @see br.com.cvc.core.ContaBasica#agendarTransferencia(br.com.cvc.core.dominio.Agendamento)
 	 */
+	@Override
 	public void agendarTransferencia(final Agendamento transacao) throws OperacaoException {
 		Transferencia transferencia = validarTransacao(transacao);
 		final Operacao operacao = new OperacaoBuilder().build(transferencia.getDataTransferencia(), transferencia.getValor());
@@ -118,7 +109,7 @@ public class Conta {
 		
 		transferencia.setContaOrigem(transacao.getContaOrigem());
 		transferencia.setContaDestino(transacao.getContaDestino());
-		transferencia.setDataTransferencia(transferencia.getDataTransferencia());
+		transferencia.setDataTransferencia(transacao.getDataTransferencia());
 		transferencia.setDataAgendamento(LocalDate.now());
 		transferencia.setValor(transacao.getValorTransferencia());
 		transferencia.setTaxa(BigDecimal.ZERO);

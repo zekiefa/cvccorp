@@ -16,8 +16,8 @@ public class Agendamento implements Serializable{
 	 */
 	private static final long serialVersionUID = 4948349597810653794L;
 	
-	private Integer contaOrigem;
-	private Integer contaDestino;
+	private String contaOrigem;
+	private String contaDestino;
 	private BigDecimal valorTransferencia;
 	private LocalDate dataTransferencia;
 	
@@ -33,7 +33,7 @@ public class Agendamento implements Serializable{
 	 * @param valorTransferencia
 	 * @param dataTransferencia
 	 */
-	public Agendamento(final Integer contaOrigem, final Integer contaDestino, final BigDecimal valorTransferencia, final LocalDate dataTransferencia) {
+	public Agendamento(final String contaOrigem, final String contaDestino, final BigDecimal valorTransferencia, final LocalDate dataTransferencia) {
 		super();
 		this.contaOrigem = contaOrigem;
 		this.contaDestino = contaDestino;
@@ -41,19 +41,19 @@ public class Agendamento implements Serializable{
 		this.dataTransferencia = dataTransferencia;
 	}
 
-	public Integer getContaOrigem() {
+	public String getContaOrigem() {
 		return contaOrigem;
 	}
 
-	public void setContaOrigem(final Integer contaOrigem) {
+	public void setContaOrigem(final String contaOrigem) {
 		this.contaOrigem = contaOrigem;
 	}
 
-	public Integer getContaDestino() {
+	public String getContaDestino() {
 		return contaDestino;
 	}
 
-	public void setContaDestino(final Integer contaDestino) {
+	public void setContaDestino(final String contaDestino) {
 		this.contaDestino = contaDestino;
 	}
 

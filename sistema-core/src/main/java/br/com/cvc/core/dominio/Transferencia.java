@@ -16,8 +16,8 @@ public class Transferencia implements Serializable {
 	 */
 	private static final long serialVersionUID = 3163357412825111192L;
 	
-	private Integer contaOrigem;
-	private Integer contaDestino;
+	private String contaOrigem;
+	private String contaDestino;
 	private BigDecimal valor;
 	private LocalDate dataTransferencia;
 	private LocalDate dataAgendamento;
@@ -27,7 +27,7 @@ public class Transferencia implements Serializable {
 		
 	}
 	
-	public Transferencia(final Integer contaOrigem, final Integer contaDestino, final BigDecimal valor, final LocalDate dataTransferencia,
+	public Transferencia(final String contaOrigem, final String contaDestino, final BigDecimal valor, final LocalDate dataTransferencia,
 			final LocalDate dataAgendamento, final BigDecimal taxa) {
 		
 		super();
@@ -39,19 +39,19 @@ public class Transferencia implements Serializable {
 		this.taxa = taxa;
 	}
 
-	public Integer getContaOrigem() {
+	public String getContaOrigem() {
 		return contaOrigem;
 	}
 
-	public void setContaOrigem(final Integer contaOrigem) {
+	public void setContaOrigem(final String contaOrigem) {
 		this.contaOrigem = contaOrigem;
 	}
 
-	public Integer getContaDestino() {
+	public String getContaDestino() {
 		return contaDestino;
 	}
 
-	public void setContaDestino(final Integer contaDestino) {
+	public void setContaDestino(final String contaDestino) {
 		this.contaDestino = contaDestino;
 	}
 
