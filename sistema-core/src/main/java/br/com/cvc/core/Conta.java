@@ -1,5 +1,7 @@
 package br.com.cvc.core;
 
+import static java.util.Objects.isNull;
+
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -33,7 +35,7 @@ public class Conta implements ContaBasica {
 	 * @return a única instância da conta.
 	 */
 	public static synchronized ContaBasica getInstance() {
-		if( instance == null ) {
+		if( isNull(instance) ) {
 			instance = new Conta();
 		}
 		
@@ -53,7 +55,7 @@ public class Conta implements ContaBasica {
 	 * @param transacao
 	 */
 	private void atualizarExtrato(final Transferencia agendamento) {
-		if( this.extrato == null ) {
+		if( isNull(this.extrato) ) {
 			this.extrato = new ArrayList<Transferencia>();
 		}
 		
@@ -83,25 +85,25 @@ public class Conta implements ContaBasica {
 	private Transferencia validarTransacao(final Agendamento transacao) throws OperacaoException {
 		 Transferencia transferencia = new Transferencia();
 		 
-		 if( transacao == null ) {
+		 if( isNull(transacao) ) {
 			throw new OperacaoException("Transação nula");
 		}
 		
-		if( transacao.getContaDestino() == null ) {
+		if( isNull(transacao.getContaDestino()) ) {
 			throw new OperacaoException("Conta de Destino não informada.");
 		}
 		
-		if( transacao.getContaOrigem() == null ) {
+		if( isNull(transacao.getContaOrigem()) ) {
 			throw new OperacaoException("Conta de Origem não informada.");
 		}
 		
-		if( transacao.getDataTransferencia() == null ) {
+		if( isNull(transacao.getDataTransferencia()) ) {
 			throw new OperacaoException("Data da Transferência não informada.");
 		}else if( transacao.getDataTransferencia().isBefore(LocalDate.now()) ) {
 			throw new OperacaoException("Data da Transferência tem que ser igual a hoje ou depois.");
 		}
 		
-		if( transacao.getValorTransferencia() == null ) {
+		if( isNull(transacao.getValorTransferencia()) ) {
 			throw new OperacaoException("Valor da Transferência não informado.");
 		}else if( transacao.getValorTransferencia().compareTo(BigDecimal.ZERO) <= 0 ) {
 			throw new OperacaoException("Valor da Transferência tem que ser maior que zero.");
