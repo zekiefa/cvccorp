@@ -1,0 +1,12 @@
+/sistema-core/target/*
+/sistema-core/.project
+/sistema-core/.classpath
+/sistema-core/.gitignore
+/sistema-core/.factorypath
+/sistema-core/.apt_generated
+/sistema-front/target/*
+/sistema-front/.project
+/sistema-front/.classpath
+/sistema-front/.gitignore
+/sistema-front/.factorypath
+/sistema-front/.apt_generated
