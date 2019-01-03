@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
+import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.apache.commons.lang3.builder.HashCodeBuilder;
+
 /**
  * Informações para realizar um agendamento de transferência de valores.
  * @author joao_
@@ -72,5 +75,36 @@ public class Agendamento implements Serializable{
 	public void setDataTransferencia(final LocalDate dataTransferencia) {
 		this.dataTransferencia = dataTransferencia;
 	}
+
+	@Override
+	public int hashCode() {
+		
+		return new HashCodeBuilder()
+				.append(this.contaDestino)
+				.append(this.contaOrigem)
+				.append(this.dataTransferencia)
+				.append(this.valorTransferencia)
+				.toHashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Agendamento other = (Agendamento) obj;
+		
+		return new EqualsBuilder()
+				.append(this.contaDestino, other.contaDestino)
+				.append(this.contaOrigem, other.contaOrigem)
+				.append(this.dataTransferencia, other.dataTransferencia)
+				.append(this.valorTransferencia, this.valorTransferencia)
+				.isEquals();
+	}
+	
+	
 	
 }
